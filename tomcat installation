@@ -1,0 +1,27 @@
+tomcat installation
+=============================
+cd /opt
+install java-11
+wget tomcat-url
+tar -xvf tomcat
+mv tomcat.1.1 to tomcat
+useradd tomcat
+visudo
+tomcat ALL=ALL NOPASSWD=ALL
+chown -R tomcat:tomcat tomcat
+cd tomcat
+chmod 775 webapps
+vi webapps/manager/META-INF/context.xml(add "<!--" at starting value tag ar end of value tag "-->" add )
+vi conf/tomcat-users.xml
+remove give data add this data
+<tomcat-users>
+-->
+
+	<role rolename="manager-gui"/>
+	<user username="admin" password="admin" roles="manager-gui"/>
+
+</tomcat-users>
+cd bin 
+./startup.sh 
+useradd admin
+passwd admin
