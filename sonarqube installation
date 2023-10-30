@@ -1,0 +1,59 @@
+sonarqube installation-method-1
+==========================================================
+ec2 instance with HTTPS and PORT:9000
+t2.micro 2cpu 4gb ram configuration before start ec2 instance
+use mobaxstream or putty for better work for sonarqube(some lags in ec2-instance when working on SQ so use Other)
+===============================================================================================================
+
+sudo su ( for ec2-user easy path for installation)
+
+everything will work under opt directory for installation of sonarqube
+no need to go outside of opt dir for any work
+
+cd /opt
+sudo yum install java-11-amazon-corretto-headless -y
+sudo yum install java-11-amazon-corretto -y
+------------------------------------------------------
+
+wget url of sonarqube zip file on website of sonar
+use community version for sonarqube installation
+don't copy new updated version use old versions to install SQ
+
+wget ( paste url link address)
+-------------------------------------------------
+unzip link address
+-----------------------------------
+rename into sonar (you will get unzip file as sonar-8.6.36 into sonar name)
+-----------------------------------------------------------
+command useradd sonar
+command passwd sonar
+----------------------------------
+after this user add change configuration in visudo file
+---------------------------------------------
+command visudo
+(file will open go down at watch root access enter there "sonar  ALL=ALL NOPASSWD=ALL")
+------------------------------------------------------------
+give all permission to sonar
+
+chmod -R 775 sonar
+chown -R sonar:sonar sonar
+
+use above commands to change group and root owner 
+we can't work on root user for install sonarqube
+--------------------------------------------------------
+command su sonar -
+ you will chnage into sonar user
+--------------------------------------
+command cd sonar
+command cd bin
+command cd linux-x86-64
+this all commands under sonar user in opt directory
+--------------------------------------------------------
+sh sonar.sh start
+
+sonar will start in port:9000
+-----------------------------------------------------
+login id : admin
+passwd : admin
+change passwd in next stage
+-----------------------------------------------
