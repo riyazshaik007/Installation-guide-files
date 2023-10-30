@@ -1,0 +1,54 @@
+1. sudo su
+2. cd /opt
+3. wget https://download.sonatype.com/nexus/3/nexus-3.44.0-01-unix.tar.gz
+4. tar -xvf nexus-3.44.0-01-unix.tar.gz
+5. yum install java-1.8.0* -y
+6. useradd nexus
+7. passwd nexus
+8. visudo (give root privilege to nexus i.e., “nexus ALL=(ALL) NOPASSWD:ALL “)
+9. ll
+10. chown -R nexus:nexus sonatype-work/ nexus-3.44.0-01
+11. mv nexus-3.44.0-01 nexus
+12. chmod 755 nexus sonatype-work/
+13. ll
+14. cd nexus/
+15. ls
+16. cd bin/
+17. vi nexus.rc (give the user you have created and remove ‘#’) (in “ ”- > “nexus”)
+18. ln -s /opt/nexus/bin/nexus /etc/init.d/nexus
+19. su nexus (switch to nexus user to start server)
+20. Create a link to Nexus
+sudo ln -s /opt/nexus/bin/nexus /etc/init.d/nexus
+
+Execute the following command to add nexus service to boot.
+
+sudo chkconfig --add nexus
+sudo chkconfig --levels 345 nexus on
+
+Start Nexus
+sudo service nexus start
+
+Check whether Nexus service is running
+sudo service nexus status
+
+
+Check the logs to see if Nexus is running
+tail -f /opt/sonatype-work/nexus3/log/nexus.log
+
+You will see Nexus started..
+If you Nexus stopped, review the steps above.
+
+Now press Ctrl C to come out of this windows.
+
+Once Nexus is successfully installed, you can access it in the browser by URL - http://public_dns_name:8081
+
+Click on Sign in link
+user name is admin and password can be found by executing below command:
+
+sudo cat /opt/sonatype-work/nexus3/admin.password
+
+
+
+
+Copy the password and click sign in.
+Now setup admin password as admin123
