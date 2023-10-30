@@ -1,0 +1,117 @@
+/var/lib/jenkins/secrets/initialAdminPassword
+
+
+Git-Maven-Jenkins Integration
+===================================================
+for this project we use 2 instance git repo in one instance and jenkins setup in anotherone instance
+because git instance access java new version ..... jenkins access java-11 version and also for choosing path variables
+for this project we need pom.xml file in git repo from developers will give this file
+else if you want make please follow procedure for pom.xml
+=========================================================================
+1.lunch ec2 instance-with linux for git repo
+=========================================================================
+for pom.xml its java program we need to install java any version in this instance
+
+>>>>Yum install java -y
+after installing java make sure install maven
+
+>>>>yum install maven -y
+now use maven commands to get pom.xml
+
+mvn archetype:generate---- >>> this command generate file for your basic project give default enter option no need to specify artifact or batch or group id.
+after this you will get SRC and pom.xml files.
+
+this all can be genearte by any directory or in root also no need to install all in one folder
+after this
+
+install git
+Yum install git -y
+
+use git commands to add this src,pom.xml into git repo.
+after add into git repo
+=============================================================================================
+2.use another instance for jenkins integration
+==============================================================================================
+lunch ec2 with linux with port 8080 in security group with HTTPS port.
+after lunch ec2 instance
+
+goes to root files in linux
+
+cd /opt >>opt directory in system files no need to create new folder
+under /opt directory install apache.maven.tar files in
+
+/opt >> wget apache.maven.unzip----
+
+unzip source file---
+rename unzip file into maven
+you will get lib,bin,ect files in maven folder
+copy bin directory path in that maven folder
+--------------------------------------------------
+now come to /root/ec2-user home directory
+
+install java -- 11 version for install jenkins
+
+install sudo yum install java-11-amazon-corretto -y
+
+after this get java path goes >> cd /usr/lib/jvm/java-11-amazon-corretto.x86_64 ------ copy this path 
+install sudo yum install maven -y
+
+after this set path for java and maven
+-----
+PATH
+now need to set PATH details in .bash_profile
+
+come to /home/root >> ll -a >> command you can see bash profile
+--------
+#!/bin/bash 
+ export M2_HOME=/opt/maven 
+ export PATH=${M2_HOME}/bin=${PATH} )
+
+vi .bash_profile
+insert
+ under fi
+M2_HOME=/opt/maven
+M2=/opt/maven/bin
+JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto.x86_64 (mostly comes like)
+
+#
+PATH=$PATH:$HOME/bin:$JAVA_HOME:$M2_HOME:$M2
+
+save this path
+source .bin_profile
+echo $path>> after this command path will show
+----------------
+after setting path
+ 
+install git in this instance
+
+yum upgarde -y
+
+after this follow jenkins installation process in jenkins website
+sudo wget jenkins repo
+sudo rpm.key
+
+again upgrade yum upgarde -y
+now install jenkins -y
+systemctl enable jenkins
+start jenkins use port 8080 and key in admin showing inwebsite
+----------------------------------------------------------------
+jenkins manage tools
+add JDK
+JAVA_HOME
+paste JAVA PATH which is get by find / -name java-11 or whereis java commands
+now add git you need to install git before start jenkins
+now config maven
+add maven don't tick automatically install
+MAVEN_HOME
+path /opt/maven
+apply-save
+--------------------------
+project get int
+config
+paste git repo url
+add maven 
+pom.xml >> in this step pom file location is need
+next give clean install  step
+----------------------------------
+now build
